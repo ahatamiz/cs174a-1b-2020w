@@ -20,6 +20,17 @@ window.Triangle = window.classes.Triangle =
         }
     };
 
+window.Rectangle = window.classes.Rectangle =
+    class Rectangle extends Shape {
+        // The simplest possible Shape – one triangle.  It has 3 vertices, each
+        // having their own 3D position, normal vector, and texture-space coordinate.
+        constructor() {
+            super("positions", "normals");
+            this.positions = [Vec.of(0, 0, 0), Vec.of(1, 0, 0), Vec.of(0, 1, 0),Vec.of(1, 1, 0)];
+            this.normals = [Vec.of(0, 1, 0), Vec.of(0, 1, 0), Vec.of(0, 1, 0),Vec.of(0, 1, 0)];
+            this.indices = [0, 1, 2,2,3,1];
+        }
+    };
 
 window.Cube = window.classes.Cube =
     class Cube extends Shape {
@@ -62,6 +73,31 @@ window.Square_Outline = window.classes.Square_Outline =
         }
     };
 
+// window.Square_Outline = window.classes.Square_Outline =
+//     class Square_Outline extends Shape {
+//         constructor() {
+//             super("positions", "colors"); // Name the values we'll define per each vertex.
+//             const white_c = Color.of(1, 1, 1, 1);
+//             // TODO: List the position of draw a square
+//             // HINT: When a set of lines is used in graphics, you should think of the list
+//             // entries as broken down into pairs; each pair of vertices will be drawn as a
+//             // line segment.
+//             this.positions.push(
+//                 ...Vec.cast(
+//                     [0, 0, 0], [1, 0, 0],
+//                     [1, 1, 0], [0, 1, 0],
+//                     [1, 0, 0], [1, 1, 0],
+//                     [0, 1, 0], [0, 0, 0],
+//                 )
+//             );
+//
+//             this.colors = [white_c, white_c, white_c, white_c, white_c, white_c, white_c, white_c,];
+//             this.indexed = false;       // Do this so we won't need to define "this.indices".
+//         }
+//     };
+
+
+
 window.Assignment_One_Scene = window.classes.Assignment_One_Scene =
     class Assignment_One_Scene extends Scene_Component {
         constructor(context, control_box) {
@@ -88,6 +124,7 @@ window.Assignment_One_Scene = window.classes.Assignment_One_Scene =
                 // same thing here.
                 'triangle': new Triangle(),
                 'box': new Cube(),
+                'rectangle': new Rectangle(),
                 'outline': new Square_Outline(),
             };
             this.submit_shapes(context, shapes);
@@ -169,27 +206,27 @@ window.Assignment_One_Scene = window.classes.Assignment_One_Scene =
 
             // TODO: Draw Something
             // 1) First, draw a triangle
-
             // this.draw_triangle(graphics_state, model_transform);
-
             // 2) Create a rectangle shape and draw a rectangle
-
             // this.draw_rectangle(graphics_state,model_transform);
-
             // 3) Use the cube class, and draw a cube. Using this cube:
 
             //    a) Let's translate it with vector v=[0,2,3]
 
-
+            // model_transform = model_transform.times(T);
+            // this.draw_cube(graphics_state, model_transform);
 
             //    b) Now, let's scale by [1,2,1] and rotate by 45 degrees
 
             // model_transform = model_transform.times(R).times(S);
             // this.draw_cube(graphics_state, model_transform);
 
-            //    c) Now, let's first rotate by 45 degree and then scale by [1,2,1]
+            //    c) Now, let's first rotate by 30 degree and then translate by v=[0,2,3]
+            //    I hope you notice that the order is not the same
 
 
+            // model_transform = model_transform.times(S).times(R);
+            // this.draw_cube(graphics_state, model_transform);
 
             // 4) Now let's use the second paradigm of drawing and draw a rectangle ( with line drawing )
 
