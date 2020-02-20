@@ -1,0 +1,821 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{cs174A-dis1B-week0}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{CS-174A Discussion 1B, Week
+0}\label{cs-174a-discussion-1b-week-0}
+
+@ Ali Hatamizadeh
+
+@ ROLFE 3126 / Friday / 2:00pm- 3:50pm
+
+@ https://github.com/ahatamiz/cs174a-1b-2020w
+
+    \section{Outline}\label{outline}
+
+\begin{itemize}
+\tightlist
+\item
+  About this course
+\item
+  JavaScript and WebGL Basic
+\item
+  Assignment 1
+\end{itemize}
+
+    \section{CS-174A Introduction}\label{cs-174a-introduction}
+
+\subsection{About Me:}\label{about-me}
+
+\begin{itemize}
+\item
+  Ali Hatamizadeh, Ph.D student in Computer Science
+\item
+  Office hours: Eng-VI 366, Friday 4:00 - 6:00 PM
+\item
+  Email: ahatamiz@ucla.edu
+\end{itemize}
+
+    \subsubsection{Grading Policies}\label{grading-policies}
+
+\begin{itemize}
+\tightlist
+\item
+  4 assignments (0 + 10 + 10 + 10): 30 pts
+\item
+  Team project: 30 pts
+\item
+  Midterm: 15 pts
+\item
+  Final: 25 pts
+\end{itemize}
+
+(May change. Stay tuned till the next lecture)
+
+    \section{JavaScript Basics}\label{javascript-basics}
+
+JavaScript can change HTML content
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{html}
+        \PYZlt{}p id=\PYZdq{}demo\PYZdq{}\PYZgt{}JavaScript can change HTML content.\PYZlt{}/p\PYZgt{}
+        \PYZlt{}button type=\PYZdq{}button\PYZdq{} onclick=\PYZsq{}document.getElementById(\PYZdq{}demo\PYZdq{}).innerHTML = \PYZdq{}Hello JavaScript!\PYZdq{}\PYZsq{}\PYZgt{}Click Me!\PYZlt{}/button\PYZgt{}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \subsection{Let vs Var vs Constant}\label{let-vs-var-vs-constant}
+
+var: When you declare a variable with var, its scope is not limited to
+the block in which it is defined. It's limited to the function in which
+it is defined.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{function} \AttributeTok{start}\NormalTok{()}\OperatorTok{\{}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{var}\NormalTok{ i}\OperatorTok{=}\DecValTok{0}\OperatorTok{;}\NormalTok{i}\OperatorTok{<}\DecValTok{5}\OperatorTok{;}\NormalTok{i}\OperatorTok{++}\NormalTok{)}\OperatorTok{\{}
+
+\OperatorTok{\}}
+
+\VariableTok{element}\NormalTok{.}\AttributeTok{text}\NormalTok{(i)}
+
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        
+        function start()\PYZob{}
+        for (var i=0;i\PYZlt{}5;i++)\PYZob{}
+        \PYZcb{}
+        
+        element.text(i);
+        
+        
+        \PYZcb{}
+        
+        start()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Let vs Var vs Constant}\label{let-vs-var-vs-constant}
+
+let and constant are block-scoped
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{function} \AttributeTok{start}\NormalTok{()}\OperatorTok{\{}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{let}\NormalTok{ i}\OperatorTok{=}\DecValTok{0}\OperatorTok{;}\NormalTok{i}\OperatorTok{<}\DecValTok{5}\OperatorTok{;}\NormalTok{i}\OperatorTok{++}\NormalTok{)}\OperatorTok{\{}
+\OperatorTok{\}}
+
+\VariableTok{element}\NormalTok{.}\AttributeTok{text}\NormalTok{(i)}
+
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        
+        function start()\PYZob{}
+        for (let i=0;i\PYZlt{}5;i++)\PYZob{}
+        \PYZcb{}
+        
+        element.text(i)
+        
+        \PYZcb{}
+        
+        start()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Some additional points}\label{some-additional-points}
+
+When you use var outside of a function, it creates a global variable and
+attaches it to the window object in the browser.
+
+When you use let to create a global variable, it is not attached to the
+window object.
+
+    \subsection{Variables and Data types}\label{variables-and-data-types}
+
+JavaScript variables are containers for storing data values.
+
+JavaScript variables can hold many \textbf{data types}: numbers,
+strings, objects and more:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{ length }\OperatorTok{=} \DecValTok{16}\OperatorTok{;}                            \CommentTok{// Number}
+\KeywordTok{var}\NormalTok{ lastName }\OperatorTok{=} \StringTok{"Johnson"}\OperatorTok{;}                   \CommentTok{// String}
+\KeywordTok{var}\NormalTok{ x }\OperatorTok{=} \OperatorTok{\{}\DataTypeTok{firstName}\OperatorTok{:}\StringTok{"John"}\OperatorTok{,} \DataTypeTok{lastName}\OperatorTok{:}\StringTok{"Doe"}\OperatorTok{\};} \CommentTok{// Object}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        var num = 16;                                  // Number
+        element.text(\PYZdq{}The number is \PYZdq{} + num)
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        element.text(\PYZsq{}here we go\PYZsq{})
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Objects}\label{objects}
+
+You define (and create) a JavaScript object with an object literal:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{ person }\OperatorTok{=} \OperatorTok{\{}\DataTypeTok{firstName}\OperatorTok{:}\StringTok{"John"}\OperatorTok{,} \DataTypeTok{lastName}\OperatorTok{:}\StringTok{"Doe"}\OperatorTok{,} \DataTypeTok{age}\OperatorTok{:}\DecValTok{50}\OperatorTok{,} \DataTypeTok{eyeColor}\OperatorTok{:}\StringTok{"blue"}\OperatorTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+    \subsection{Objects}\label{objects}
+
+Another way of creating object You define (and create) a JavaScript
+object with an object literal:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{ person}\OperatorTok{=} \KeywordTok{new} \AttributeTok{Object}\NormalTok{()}
+\VariableTok{person}\NormalTok{.}\AttributeTok{firstName}\OperatorTok{=}\StringTok{"John"}
+\VariableTok{person}\NormalTok{.}\AttributeTok{age}\OperatorTok{=}\DecValTok{50}
+\VariableTok{person}\NormalTok{.}\AttributeTok{eyeColor}\OperatorTok{=}\StringTok{"blue"}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        var person= new Object()
+        person.firstName=\PYZdq{}John\PYZdq{}
+        person.age=50
+        person.eyeColor=\PYZdq{}blue\PYZdq{}
+        element.text(person[\PYZsq{}eyeColor\PYZsq{}])
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        var person = \PYZob{}firstName:\PYZdq{}John\PYZdq{}, lastName:\PYZdq{}Doe\PYZdq{}, age:50, eyeColor:\PYZdq{}blue\PYZdq{}\PYZcb{};
+        element.text(person.firstName + \PYZdq{}\PYZsq{}s age is \PYZdq{} + person[\PYZdq{}age\PYZdq{}]);  // two ways for accessing the property of an object
+        
+        var name = new String(\PYZdq{}John\PYZdq{});
+        var name\PYZus{}2 = \PYZdq{}John\PYZdq{};
+        element.text(name === \PYZdq{}John\PYZdq{}); 
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Functions}\label{functions}
+
+A JavaScript function is a block of code designed to perform a
+particular task.
+
+A JavaScript function is executed when "something" invokes it (calls
+it).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+        function myFunction(p1, p2) \PYZob{}
+          return p1 * p2;   // The function returns the product of p1 and p2
+        \PYZcb{}
+        
+        var a = 3;
+        var b = 4;
+        element.text(\PYZdq{}The product of a and b is \PYZdq{} + myFunction(a,b))
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Factory Functions}\label{factory-functions}
+
+A factory function creates an object
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{function} \AttributeTok{createCircle}\NormalTok{(radius}\OperatorTok{,}\NormalTok{location)}\OperatorTok{\{}
+    
+    \ControlFlowTok{return} \OperatorTok{\{}
+        \DataTypeTok{radius}\OperatorTok{:}\NormalTok{radius}\OperatorTok{,}
+        \DataTypeTok{location}\OperatorTok{:}\NormalTok{location}\OperatorTok{,}
+        \DataTypeTok{visible}\OperatorTok{:}\KeywordTok{true}\OperatorTok{,}
+        \DataTypeTok{draw}\OperatorTok{:} \KeywordTok{function}\NormalTok{()}\OperatorTok{\{}\VariableTok{element}\NormalTok{.}\AttributeTok{text}\NormalTok{(}\StringTok{'Here we go : draw'}\NormalTok{)}\OperatorTok{\}}
+    \OperatorTok{\}}
+
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js} 
+        function createCircle(radius)\PYZob{}
+            
+            return \PYZob{}
+                radius:radius,
+                visible:true,
+                draw: function()\PYZob{}element.text(\PYZsq{}draw\PYZsq{})\PYZcb{}
+            \PYZcb{}
+        
+        \PYZcb{}
+        
+        const circle1=createCircle(1)
+        circle1.draw()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{JavaScript this Keyword}\label{javascript-this-keyword}
+
+" this " in JavaScript refers to the object that is executing the
+current function
+
+If the function is part of an object ( in other words is a method of
+that object): " this " refrences the object itself
+
+Otherwise, " this " refers to the global object ( which is window object
+in browsers)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js} 
+         
+         const video =\PYZob{}
+             title:\PYZsq{}a\PYZsq{},
+             play()\PYZob{}
+                 element.text(this)
+             \PYZcb{}
+         \PYZcb{}
+         
+         video.play()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js} 
+         
+         const video =\PYZob{}
+             title:\PYZsq{}a\PYZsq{},
+             play()\PYZob{}
+                 element.text(this)
+             \PYZcb{}
+         \PYZcb{}
+         
+         function playVideo()\PYZob{}
+             element.text(this)
+         \PYZcb{}
+         
+         playVideo()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Constructor Functions}\label{constructor-functions}
+
+A constructor function also creates an object. Be aware of the naming
+conventions:
+
+Camel notation: oneTwoThree ( Used for naming factory functions)
+
+Pascal notation : OneTwoThree ( Used for naming constructor functions)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\KeywordTok{function} \AttributeTok{Circle}\NormalTok{(radius}\OperatorTok{,}\NormalTok{location)}\OperatorTok{\{}
+    \CommentTok{//this here is an empty object to which we add radius and location }
+    \CommentTok{//JavaScripts objects are dynamic. Once created, we can add aditional methods to them.}
+    \KeywordTok{this}\NormalTok{.}\AttributeTok{radius}\OperatorTok{=}\NormalTok{radius}
+    \KeywordTok{this}\NormalTok{.}\AttributeTok{location}\OperatorTok{=}\NormalTok{location}
+    \KeywordTok{this}\NormalTok{.}\AttributeTok{visible}\OperatorTok{=}\KeywordTok{true}
+    \KeywordTok{this}\NormalTok{.}\AttributeTok{draw}\OperatorTok{=}\KeywordTok{function}\NormalTok{()}\OperatorTok{\{}\VariableTok{element}\NormalTok{.}\AttributeTok{text}\NormalTok{(}\StringTok{'Here we go : draw'}\NormalTok{)}\OperatorTok{\}}
+    
+\OperatorTok{\}}
+
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+         
+         function Circle(radius)\PYZob{}
+             //this here is an empty object to which we add radius
+             //JavaScripts objects are dynamic. Once created, we can add aditional methods to them.
+             this.radius=radius
+             this.visible=true
+             this.draw=function()\PYZob{}element.text(\PYZsq{}Here we go : draw\PYZsq{})\PYZcb{}
+             
+         \PYZcb{}
+         
+         const circle1=new Circle(1)
+         circle1.draw()
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{Object Methods}\label{object-methods}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+         var person = \PYZob{}
+           firstName: \PYZdq{}John\PYZdq{},
+           lastName : \PYZdq{}Doe\PYZdq{},
+           id       : 5566,
+           fullName : function() \PYZob{}
+             return this.firstName + \PYZdq{} \PYZdq{} + this.lastName;
+           \PYZcb{}
+         \PYZcb{};
+         element.text(person.fullName())
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsubsection{Object Constructors}\label{object-constructors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{js}
+         function Person(first, last, age, eye) \PYZob{}
+           this.firstName = first;
+           this.lastName = last;
+           this.age = age;
+           this.eyeColor = eye;
+         \PYZcb{}
+         
+         var myFather = new Person(\PYZdq{}John\PYZdq{}, \PYZdq{}Doe\PYZdq{}, 50, \PYZdq{}blue\PYZdq{});
+         
+         element.text(\PYZdq{}My father is \PYZdq{} + myFather.firstName + \PYZdq{} \PYZdq{} + myFather.lastName + \PYZdq{}.\PYZdq{})
+         //element.text(myFather)
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \subsection{JavaScript Classes}\label{javascript-classes}
+
+A class is a type of function, but instead of using the keyword
+\texttt{function} to initiate it, we use the keyword \texttt{class}, and
+the properties is assigned inside a \texttt{constructor()} method.
+
+    \subsubsection{Class Definition}\label{class-definition}
+
+Use the keyword \texttt{class} to create a class, and always add a
+\texttt{constructor} method.
+
+The \texttt{constructor} method is called each time the class object is
+initialized.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Car }\OperatorTok{\{}
+  \AttributeTok{constructor}\NormalTok{(brand) }\OperatorTok{\{}
+    \KeywordTok{this}\NormalTok{.}\AttributeTok{carname} \OperatorTok{=}\NormalTok{ brand}\OperatorTok{;}
+  \OperatorTok{\}}
+\OperatorTok{\}}
+\NormalTok{mycar }\OperatorTok{=} \KeywordTok{new} \AttributeTok{Car}\NormalTok{(}\StringTok{"Ford"}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+    \subsection{A Quick Way to Learn JS}\label{a-quick-way-to-learn-js}
+
+\begin{itemize}
+\tightlist
+\item
+  https://www.w3schools.com/js/
+\end{itemize}
+
+    \section{WebGL Basics}\label{webgl-basics}
+
+WebGL (Web Graphics Library) is a JavaScript API for rendering
+interactive 3D and 2D graphics within any compatible web browser without
+the use of plug-ins. WebGL does so by introducing an API that closely
+conforms to OpenGL ES 2.0 that can be used in HTML5
+\texttt{\textless{}canvas\textgreater{}} elements.
+
+\begin{itemize}
+\tightlist
+\item
+  \href{demo_0/demo.html}{Demo 0: Clearing with colors}. How to clear
+  the rendering context with a solid color.
+\item
+  \href{demo_1/index.html}{Demo 1: Simple color animation}. A very basic
+  color animation.
+\end{itemize}
+
+    \subsection{... and some other projects}\label{and-some-other-projects}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{http://madebyevan.com/webgl-water/}{WebGL Wather}
+\item
+  \href{http://2017.makemepulse.com}{Make me pulse wish 2017}
+\end{itemize}
+
+    \section{Assignment 1: Environment Setup and Creating a Simple
+Rectangle}\label{assignment-1-environment-setup-and-creating-a-simple-rectangle}
+
+Posted on CCLE (Week 1)
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
