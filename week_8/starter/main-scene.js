@@ -19,11 +19,14 @@ class Assignment_Four_Scene extends Scene_Component
                        }
         this.submit_shapes( context, shapes );
 
+        shapes.box_2.texture_coords = shapes.box_2.texture_coords.map( vec => Vec.of( vec[0] * 2, vec[1] * 2 ) );
+
         // TODO:  Create the materials required to texture both cubes with the correct images and settings.
         //        Make each Material from the correct shader.  Phong_Shader will work initially, but when 
         //        you get to requirements 6 and 7 you will need different ones.
         this.materials =
-          { phong: context.get_instance( Phong_Shader ).material( Color.of( 1,1,0,1 ) )
+          { phong: context.get_instance( Phong_Shader ).material( Color.of( 1,1,0,1 ) ),
+              texture1: context.get_instance(Texture_Rotate).material( Color.of( 0,0,0,1 ),{ambient:1,texture:context.get_instance("assets/texture.jpg", false ) })
           }
 
         this.lights = [ new Light( Vec.of( -5,5,5,1 ), Color.of( 0,1,1,1 ), 100000 ) ];
@@ -38,9 +41,10 @@ class Assignment_Four_Scene extends Scene_Component
     display( graphics_state )
       { graphics_state.lights = this.lights;        // Use the lights stored in this.lights.
         const t = graphics_state.animation_time / 1000, dt = graphics_state.animation_delta_time / 1000;
-
+        var translation=Mat4.translation([-2,0,0])
         // TODO:  Draw the required boxes. Also update their stored matrices.
-        this.shapes.axis.draw( graphics_state, Mat4.identity(), this.materials.phong );
+        // this.shapes.axis.draw( graphics_state, Mat4.identity(), this.materials.phong );
+          this.shapes.box.draw(graphics_state,translation,this.materials.texture1);
       }
   }
 
@@ -66,7 +70,7 @@ class Texture_Scroll_X extends Phong_Shader
 }
 
 class Texture_Rotate extends Phong_Shader
-{ fragment_glsl_code()           // ********* FRAGMENT SHADER ********* 
+{ fragment_glsl_code()           // ********* FRAGMENT SHADER *********
     {
       // TODO:  Modify the shader below (right now it's just the same fragment shader as Phong_Shader) for requirement #7.
       return `
@@ -77,8 +81,14 @@ class Texture_Rotate extends Phong_Shader
             return;
           }                                 // If we get this far, calculate Smooth "Phong" Shading as opposed to Gouraud Shading.
                                             // Phong shading is not to be confused with the Phong Reflection Model.
-          vec4 tex_color = texture2D( texture, f_tex_coord );                         // Sample the texture image in the correct place.
-                                                                                      // Compute an initial (ambient) color:
+          
+          
+          float theta = animation_time * 3.1415926 * 0.5;
+          mat2 rotation = mat2( cos( theta ), -sin( theta ), sin( theta ), cos( theta ) );
+          // vec4 tex_color = texture2D( texture, rotation * (f_tex_coord  ) );
+          vec4 tex_color = texture2D( texture, rotation * (f_tex_coord - vec2( 0.5, 0.5 ) ) + vec2( 0.5, 0.5) );
+
+                                                                                                // Compute an initial (ambient) color:
           if( USE_TEXTURE ) gl_FragColor = vec4( ( tex_color.xyz + shapeColor.xyz ) * ambient, shapeColor.w * tex_color.w ); 
           else gl_FragColor = vec4( shapeColor.xyz * ambient, shapeColor.w );
           gl_FragColor.xyz += phong_model_lights( N );                     // Compute the final color with contributions from lights.
